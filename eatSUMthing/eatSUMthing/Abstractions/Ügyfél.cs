@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eatSUMthing.Abstractions
 {
-    public class Ügyfél
+    public abstract class Ügyfél
     {
         public string Név { get; set; }
 

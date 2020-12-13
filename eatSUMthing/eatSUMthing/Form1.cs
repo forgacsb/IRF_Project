@@ -25,7 +25,11 @@ namespace eatSUMthing
 
             List<Partner> átmenet = context.Partner.ToList();
             var statusz = (from x in átmenet select x.Státusz).Distinct().ToList();
+            var iskola = (from x in átmenet select x.Intézmény).Distinct().ToList();
+            var osztaly = (from x in átmenet select x.Osztály).Distinct().ToList();
             comboBox1.DataSource = statusz;
+            comboBox4.DataSource = iskola;
+            comboBox5.DataSource = osztaly;
             foreach (var x in átmenet)
             {
                 if (x.Státusz == "diák")
@@ -56,26 +60,39 @@ namespace eatSUMthing
 
                 }
             }
+            szűrés();
            // tanár = ((List<Tanár>)(from x in context.Partner.ToList() where x.Státusz=="tanár" select new {x.Név,x.Születési_idő,x.Lakcím,x.Intézmény }));
-            dataGridView1.DataSource = diákok;
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            szűrés();
+        }
+
+        private void comboBox4_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            szűrés();
+        }
+
+        public void szűrés()
+        {
             if ((string)comboBox1.SelectedItem == "tanár")
             {
-                dataGridView1.DataSource = tanárok;
+                dataGridView1.DataSource = (List<Tanár>)(from x in tanárok where x.Intézmény == (string)comboBox4.SelectedItem select x).ToList();
+                comboBox5.Visible = false;
+                label5.Visible = false;
             }
             else
             {
-                dataGridView1.DataSource = diákok;
+                dataGridView1.DataSource = (List<Diák>)(from x in diákok where x.Intézmény == (string)comboBox4.SelectedItem && x.Osztály == (string)comboBox5.SelectedItem select x).ToList();
+                comboBox5.Visible = true;
+                label5.Visible = true;
             }
+        }
+
+        private void comboBox5_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            szűrés();
         }
     }
 }
