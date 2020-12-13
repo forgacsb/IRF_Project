@@ -94,5 +94,11 @@ namespace eatSUMthing
         {
             szűrés();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Validáció v = new Validáció();
+            v.Show();
+        }
     }
 }

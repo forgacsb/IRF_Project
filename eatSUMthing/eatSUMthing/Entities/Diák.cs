@@ -23,11 +23,6 @@ namespace eatSUMthing.Entities
 
         public string Intézmény { get; set; }
 
-        public string Név { get; set; }
-
-        public DateTime Születési_idő { get; set; }
-
-        public string Lakcím { get; set; }
 
         //public Diák()
         //{
