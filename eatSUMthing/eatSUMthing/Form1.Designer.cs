@@ -99,7 +99,7 @@
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(278, 25);
+            this.comboBox3.Location = new System.Drawing.Point(637, 311);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(115, 21);
             this.comboBox3.TabIndex = 6;
@@ -107,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(275, 9);
+            this.label3.Location = new System.Drawing.Point(634, 295);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 13);
             this.label3.TabIndex = 7;
@@ -136,7 +136,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(151, 50);
             this.button2.TabIndex = 10;
-            this.button2.Text = "Új személy hozzáadása";
+            this.button2.Text = "Alaphelyzet";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
