@@ -7,54 +7,36 @@ using System.Threading.Tasks;
 
 namespace eatSUMthing.Entities
 {
-    class Diák : Partner
+    class Diák : Ügyfél
     {
-        private string _Anyja_neve;
+        public string Anyja_neve { get; set; }
 
-        public string Anyja_neve
-        {
-            get { return _Anyja_neve; }
-            set { _Anyja_neve = value; }
-        }
-        private string _Osztály;
+        public string Osztály { get; set; }
 
-        public string Osztály
-        {
-            get { return _Osztály; }
-            set { _Osztály = value; }
-        }
+        public Boolean TB { get; set; }
 
-        private Boolean _TB;
+        public Boolean NCS { get; set; }
 
-        public Boolean TB
-        {
-            get { return _TB; }
-            set { _TB = value; }
-        }
+        public Boolean GYVK { get; set; }
 
-        private Boolean _NCS;
+        public Boolean Diétás { get; set; }
 
-        public Boolean NCS
-        {
-            get { return _NCS; }
-            set { _NCS = value; }
-        }
+        public string Intézmény { get; set; }
 
-        private Boolean _GYVK;
+        public string Név { get; set; }
 
-        public Boolean GYVK
-        {
-            get { return _GYVK; }
-            set { _GYVK = value; }
-        }
+        public DateTime Születési_idő { get; set; }
 
-        private Boolean _Diétás;
+        public string Lakcím { get; set; }
 
-        public Boolean Diétás
-        {
-            get { return _Diétás; }
-            set { _Diétás = value; }
-        }
+        //public Diák()
+        //{
+        //    Név = this.Név;
+        //    Születési_idő = this.Születési_idő;
+        //    Lakcím = this.Lakcím;
+        //    Anyja_neve = this.Anyja_neve;
+
+        //}
 
     }
 }
