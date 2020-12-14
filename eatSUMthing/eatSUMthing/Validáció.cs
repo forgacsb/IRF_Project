@@ -28,6 +28,7 @@ namespace eatSUMthing
             foreach (var button in this.Controls.OfType<Button>())
             {
                 button.Text = szamok[j].ToString();
+                button.BackColor = Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256));
                 j++;
             }
 

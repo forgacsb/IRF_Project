@@ -108,8 +108,15 @@ namespace eatSUMthing
 
                 xlSheet = xlWB.ActiveSheet;
 
-
-                CreateTable(); 
+                if ((string)comboBox1.SelectedItem == "tanár")
+                {
+                    CreateTableTanár();
+                }
+                else
+                {
+                   CreateTableDiák();
+                }
+                 
 
                 xlApp.Visible = true;
                 xlApp.UserControl = true;
@@ -126,7 +133,7 @@ namespace eatSUMthing
             }
         }
 
-        private void CreateTable()
+        private void CreateTableDiák()
         {
             string[] headers = new string[] {
                  "Név",
@@ -166,6 +173,48 @@ namespace eatSUMthing
             GetCell(3 + values.GetLength(0), 3));
             calculated.Formula = "=B4 * counta(D4:AH4)";
         }
+
+        private void CreateTableTanár()
+        {
+            string[] headers = new string[] {
+                 "Név",
+                 "Napi ár",
+                 "Összesen",
+                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30","31" };
+            xlSheet.Cells[1, 1] = (string)comboBox4.SelectedItem;
+            xlSheet.Cells[2, 1] = (string)comboBox5.SelectedItem;
+            for (int i = 0; i < headers.Length; i++)
+            {
+                xlSheet.Cells[3, 1 + i] = headers[i];
+            }
+            object[,] values = new object[szűrttanár.Count, headers.Length - 31];
+            int counter = 0;
+            foreach (Tanár tanar in szűrttanár)
+            {
+                values[counter, 0] = tanar.Név;
+                values[counter, 1] = tanar.Ár;
+                values[counter, 2] = "";
+                counter++;
+            }
+
+            xlSheet.get_Range(
+            GetCell(4, 1),
+            GetCell(3 + values.GetLength(0), values.GetLength(1))).Value2 = values;
+
+            Excel.Range headerRange = xlSheet.get_Range(GetCell(3, 1), GetCell(3, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 30;
+            headerRange.Interior.Color = Color.Gray;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThin);
+
+            Excel.Range calculated = xlSheet.get_Range(GetCell(4, 3),
+            GetCell(3 + values.GetLength(0), 3));
+            calculated.Formula = "=B4 * counta(D4:AH4)";
+        }
+
         private string GetCell(int x, int y)
                     {
                         string ExcelCoordinate = "";
