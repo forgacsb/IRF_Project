@@ -23,15 +23,5 @@ namespace eatSUMthing.Entities
 
         public string Intézmény { get; set; }
 
-
-        //public Diák()
-        //{
-        //    Név = this.Név;
-        //    Születési_idő = this.Születési_idő;
-        //    Lakcím = this.Lakcím;
-        //    Anyja_neve = this.Anyja_neve;
-
-        //}
-
     }
 }

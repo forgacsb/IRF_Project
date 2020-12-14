@@ -1,0 +1,9 @@
+Az eatSUMthing szoftver egy város gyermekétkeztetési adminisztrációját megkönnyítő alkalmazás, melynek célja hogy egyszerűen és átláthatóan tudjuk adminisztrálni a gyermekétkeztetési adatokat, menedzselni és riportolni tudjuk az étkezési adagszámokat.
+
+A program során a létrehozási minták közül az Abstract Factory modellt alkalmazzuk.
+A programban ügyfeleket tárolunk, viszont nem minden ügyfélnek vannak azonos paraméterei, amelyet tárolni szeretnénk róla. Így az ügyfél osztály egy asztrakció lesz, melyben a közös, főparaméterek kerülnek tárolásra.  Ezek a Név, születési idő és lakcím, valamint az Ár.
+
+Létrejövő, ebből származtatott két osztály pedig a Tanár és a Diák lesz.
+Tanár osztály további kiegészítő információként tartalmazza az oktatási intézményt.
+Diák osztály több fontosabb információt is tartalmaz: Anyja_neve, Osztály, TB (tartós beteg), NCS (Nagycsaládos), GYVK (Gyermek Védelmi Kedvezmény), Diétás, Intézmény.
+Mindemellett a program része egy PricingEngine árazómodul készítése, mely kiszámolja a többkülönféle bemeneti paraméter alapján a kiszámlázandó étkezési díjakat.
