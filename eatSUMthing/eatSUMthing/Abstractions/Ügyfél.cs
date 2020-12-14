@@ -13,5 +13,7 @@ namespace eatSUMthing.Abstractions
         public DateTime Születési_idő { get; set; }
 
         public string Lakcím { get; set; }
+
+        public int Ár { get; set; }
     }
 }

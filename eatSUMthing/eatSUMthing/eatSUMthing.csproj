@@ -90,6 +90,12 @@
     <Compile Include="Validáció.Designer.cs">
       <DependentUpon>Validáció.cs</DependentUpon>
     </Compile>
+    <Compile Include="Árazás.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Árazás.Designer.cs">
+      <DependentUpon>Árazás.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +110,9 @@
     </Compile>
     <EmbeddedResource Include="Validáció.resx">
       <DependentUpon>Validáció.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Árazás.resx">
+      <DependentUpon>Árazás.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

@@ -16,21 +16,20 @@ namespace eatSUMthing
         partnerekEntities context = new partnerekEntities();
         List<Tanár> tanárok= new List<Tanár>();
         List<Diák> diákok= new List<Diák>();
-        
 
 
         public Form1()
         {
             InitializeComponent();
 
-            List<Partner> átmenet = context.Partner.ToList();
-            var statusz = (from x in átmenet select x.Státusz).Distinct().ToList();
-            var iskola = (from x in átmenet select x.Intézmény).Distinct().ToList();
-            var osztaly = (from x in átmenet select x.Osztály).Distinct().ToList();
+            List<Partner> p = context.Partner.ToList();
+            var statusz = (from x in p select x.Státusz).Distinct().ToList();
+            var iskola = (from x in p select x.Intézmény).Distinct().ToList();
+            var osztaly = (from x in p select x.Osztály).Distinct().ToList();
             comboBox1.DataSource = statusz;
             comboBox4.DataSource = iskola;
             comboBox5.DataSource = osztaly;
-            foreach (var x in átmenet)
+            foreach (var x in p)
             {
                 if (x.Státusz == "diák")
                 {
@@ -78,13 +77,15 @@ namespace eatSUMthing
         {
             if ((string)comboBox1.SelectedItem == "tanár")
             {
-                dataGridView1.DataSource = (List<Tanár>)(from x in tanárok where x.Intézmény == (string)comboBox4.SelectedItem select x).ToList();
+                List<Tanár> szűrttanár = (List<Tanár>)(from x in tanárok where x.Intézmény == (string)comboBox4.SelectedItem select x).ToList();
+                dataGridView1.DataSource = szűrttanár;
                 comboBox5.Visible = false;
                 label5.Visible = false;
             }
             else
             {
-                dataGridView1.DataSource = (List<Diák>)(from x in diákok where x.Intézmény == (string)comboBox4.SelectedItem && x.Osztály == (string)comboBox5.SelectedItem select x).ToList();
+                List<Diák> szűrtdiák= (List<Diák>)(from x in diákok where x.Intézmény == (string)comboBox4.SelectedItem && x.Osztály == (string)comboBox5.SelectedItem select x).ToList();
+                dataGridView1.DataSource = szűrtdiák;
                 comboBox5.Visible = true;
                 label5.Visible = true;
             }
@@ -98,7 +99,61 @@ namespace eatSUMthing
         private void button1_Click(object sender, EventArgs e)
         {
             Validáció v = new Validáció();
-            v.Show();
+            if (v.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Sikeres ellenőrzés! \n A kért folyamat elkezdődött.");
+            }
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Validáció v = new Validáció();
+            if (v.ShowDialog() == DialogResult.OK)
+            {
+                Árazás á = new Árazás();
+                if (á.ShowDialog() == DialogResult.OK)
+                {
+                    
+                    if ((string)comboBox1.SelectedItem == "tanár")
+                    {
+
+                        foreach (var i in tanárok)
+                        {
+                            i.Ár = á.TeljesÁr;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var i in diákok)
+                        {
+                            i.Ár = á.TeljesÁr;
+
+                            if (i.NCS==true)
+                            {
+                                i.Ár = á.TeljesÁr / 2;
+                            }
+                            if (i.TB==true)
+                            {
+                                i.Ár =á.TeljesÁr/10;
+                            }
+                            if (i.GYVK==true)
+                            {
+                                i.Ár = 0;
+                            }
+                            if (i.Diétás)
+                            {
+                                i.Ár = (int)(i.Ár * 1.2);
+                            }
+
+                        }
+                    }
+                    szűrés();
+                }
+                
+            }
+
+
         }
     }
 }

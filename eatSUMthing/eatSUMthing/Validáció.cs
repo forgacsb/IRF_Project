@@ -31,9 +31,8 @@ namespace eatSUMthing
                 j++;
             }
 
-            kivalasztott = rnd.Next(1,5);
-            label1.Text= szamok[kivalasztott].ToString();
-            //this.Controls["button"+kivalasztott.ToString()].Text=szamok[kivalasztott].ToString();
+            kivalasztott = rnd.Next(1,6);
+            label1.Text= szamok[kivalasztott-1].ToString();
             
             
         }
@@ -43,7 +42,7 @@ namespace eatSUMthing
             if (button1.Text == label1.Text)
             {
                 button1.BackColor = Color.Green;
-                this.Hide();
+                this.DialogResult= DialogResult.OK;
             }
         }
 
@@ -52,7 +51,7 @@ namespace eatSUMthing
             if (button2.Text == label1.Text)
             {
                 button2.BackColor = Color.Green;
-                this.Hide();
+                this.DialogResult = DialogResult.OK;
             }
         }
 
@@ -61,7 +60,7 @@ namespace eatSUMthing
             if (button3.Text == label1.Text)
             {
                 button3.BackColor = Color.Green;
-                this.Hide();
+                this.DialogResult = DialogResult.OK;
             }
         }
 
@@ -70,7 +69,7 @@ namespace eatSUMthing
             if (button4.Text == label1.Text)
             {
                 button4.BackColor = Color.Green;
-                this.Hide();
+                this.DialogResult = DialogResult.OK;
             }
         }
 
@@ -79,7 +78,7 @@ namespace eatSUMthing
             if (button5.Text == label1.Text)
             {
                 button5.BackColor = Color.Green;
-                this.Hide();
+                this.DialogResult = DialogResult.OK;
             }
         }
 
