@@ -28,14 +28,6 @@ namespace eatSUMthing
         public Form1()
         {
             InitializeComponent();
-
-            List<Partner> p = context.Partner.ToList();
-            var statusz = (from x in p select x.Státusz).Distinct().ToList();
-            var iskola = (from x in p select x.Intézmény).Distinct().ToList();
-            var osztaly = (from x in p select x.Osztály).Distinct().ToList();
-            comboBox1.DataSource = statusz;
-            comboBox4.DataSource = iskola;
-            comboBox5.DataSource = osztaly;
             Betöltés();
         }
 
