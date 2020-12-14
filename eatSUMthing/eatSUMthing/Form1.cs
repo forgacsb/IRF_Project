@@ -36,38 +36,7 @@ namespace eatSUMthing
             comboBox1.DataSource = statusz;
             comboBox4.DataSource = iskola;
             comboBox5.DataSource = osztaly;
-            foreach (var x in p)
-            {
-                if (x.Státusz == "diák")
-                {
-                    Diák d = new Diák();
-                    d.Név = x.Név;
-                    d.Anyja_neve = x.Anyja_neve;
-                    d.Születési_idő = (DateTime)x.Születési_idő;
-                    d.Lakcím = x.Lakcím;
-                    d.Intézmény = x.Intézmény;
-                    d.Osztály = x.Osztály;
-                    d.NCS = (Boolean)x.Nagycsaládos;
-                    d.TB = (Boolean)x.Tartós_beteg;
-                    d.GYVK = (Boolean)x.GYVK;
-                    d.Diétás = (Boolean)x.Diétás;
-                    diákok.Add(d);
-
-                }
-
-                if (x.Státusz == "tanár")
-                {
-                    Tanár t = new Tanár();
-                    t.Név = x.Név;
-                    t.Születési_idő = (DateTime)x.Születési_idő;
-                    t.Lakcím = x.Lakcím;
-                    t.Intézmény = x.Intézmény;
-                    tanárok.Add(t);
-
-                }
-            }
-            szűrés();
-           // tanár = ((List<Tanár>)(from x in context.Partner.ToList() where x.Státusz=="tanár" select new {x.Név,x.Születési_idő,x.Lakcím,x.Intézmény }));
+            Betöltés();
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
@@ -182,7 +151,6 @@ namespace eatSUMthing
                  "Összesen",
                  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30","31" };
             xlSheet.Cells[1, 1] = (string)comboBox4.SelectedItem;
-            xlSheet.Cells[2, 1] = (string)comboBox5.SelectedItem;
             for (int i = 0; i < headers.Length; i++)
             {
                 xlSheet.Cells[3, 1 + i] = headers[i];
@@ -295,6 +263,56 @@ namespace eatSUMthing
             }
 
 
+        }
+
+        public void Betöltés()
+        {
+            List<Partner> p = context.Partner.ToList();
+            var statusz = (from x in p select x.Státusz).Distinct().ToList();
+            var iskola = (from x in p select x.Intézmény).Distinct().ToList();
+            var osztaly = (from x in p select x.Osztály).Distinct().ToList();
+            comboBox1.DataSource = statusz;
+            comboBox4.DataSource = iskola;
+            comboBox5.DataSource = osztaly;
+
+            foreach (var x in p)
+            {
+                if (x.Státusz == "diák")
+                {
+                    Diák d = new Diák();
+                    d.Név = x.Név;
+                    d.Anyja_neve = x.Anyja_neve;
+                    d.Születési_idő = (DateTime)x.Születési_idő;
+                    d.Lakcím = x.Lakcím;
+                    d.Intézmény = x.Intézmény;
+                    d.Osztály = x.Osztály;
+                    d.NCS = (Boolean)x.Nagycsaládos;
+                    d.TB = (Boolean)x.Tartós_beteg;
+                    d.GYVK = (Boolean)x.GYVK;
+                    d.Diétás = (Boolean)x.Diétás;
+                    diákok.Add(d);
+
+                }
+
+                if (x.Státusz == "tanár")
+                {
+                    Tanár t = new Tanár();
+                    t.Név = x.Név;
+                    t.Születési_idő = (DateTime)x.Születési_idő;
+                    t.Lakcím = x.Lakcím;
+                    t.Intézmény = x.Intézmény;
+                    tanárok.Add(t);
+
+                }
+            }
+            szűrés();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tanárok.Clear();
+            diákok.Clear();
+            Betöltés();
         }
     }
 }
