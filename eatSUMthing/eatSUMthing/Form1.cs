@@ -212,22 +212,22 @@ namespace eatSUMthing
 
                         foreach (var i in tanárok)
                         {
-                            i.Ár = á.TeljesÁr;
+                            i.Ár = Int32.Parse(á.TeljesÁr);
                         }
                     }
                     else
                     {
                         foreach (var i in diákok)
                         {
-                            i.Ár = á.TeljesÁr;
+                            i.Ár = Int32.Parse(á.TeljesÁr);
 
                             if (i.NCS==true)
                             {
-                                i.Ár = á.TeljesÁr / 2;
+                                i.Ár = Int32.Parse(á.TeljesÁr) / 2;
                             }
                             if (i.TB==true)
                             {
-                                i.Ár =á.TeljesÁr/10;
+                                i.Ár = Int32.Parse(á.TeljesÁr) / 10;
                             }
                             if (i.GYVK==true)
                             {
