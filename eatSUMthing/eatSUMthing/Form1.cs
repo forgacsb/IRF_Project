@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace eatSUMthing
 {
@@ -16,7 +18,12 @@ namespace eatSUMthing
         partnerekEntities context = new partnerekEntities();
         List<Tanár> tanárok= new List<Tanár>();
         List<Diák> diákok= new List<Diák>();
+        List<Tanár> szűrttanár = new List<Tanár>();
+        List<Diák> szűrtdiák= new List<Diák>();
 
+        Excel.Application xlApp;
+        Excel.Workbook xlWB;
+        Excel.Worksheet xlSheet;
 
         public Form1()
         {
@@ -77,20 +84,104 @@ namespace eatSUMthing
         {
             if ((string)comboBox1.SelectedItem == "tanár")
             {
-                List<Tanár> szűrttanár = (List<Tanár>)(from x in tanárok where x.Intézmény == (string)comboBox4.SelectedItem select x).ToList();
+                szűrttanár = (List<Tanár>)(from x in tanárok where x.Intézmény == (string)comboBox4.SelectedItem select x).ToList();
                 dataGridView1.DataSource = szűrttanár;
                 comboBox5.Visible = false;
                 label5.Visible = false;
             }
             else
             {
-                List<Diák> szűrtdiák= (List<Diák>)(from x in diákok where x.Intézmény == (string)comboBox4.SelectedItem && x.Osztály == (string)comboBox5.SelectedItem select x).ToList();
+                szűrtdiák = (List<Diák>)(from x in diákok where x.Intézmény == (string)comboBox4.SelectedItem && x.Osztály == (string)comboBox5.SelectedItem select x).ToList();
                 dataGridView1.DataSource = szűrtdiák;
                 comboBox5.Visible = true;
                 label5.Visible = true;
             }
         }
 
+        public void CreateExcel()
+        {
+            try
+            {
+                xlApp = new Excel.Application();
+
+                xlWB = xlApp.Workbooks.Add(Missing.Value);
+
+                xlSheet = xlWB.ActiveSheet;
+
+
+                CreateTable(); 
+
+                xlApp.Visible = true;
+                xlApp.UserControl = true;
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+                MessageBox.Show(errMsg, "Error");
+
+                xlWB.Close(false, Type.Missing, Type.Missing);
+                xlApp.Quit();
+                xlWB = null;
+                xlApp = null;
+            }
+        }
+
+        private void CreateTable()
+        {
+            string[] headers = new string[] {
+                 "Név",
+                 "Napi ár",
+                 "Összesen",
+                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30","31" };
+            xlSheet.Cells[1, 1] = (string)comboBox4.SelectedItem;
+            xlSheet.Cells[2, 1] = (string)comboBox5.SelectedItem;
+            for (int i = 0; i < headers.Length; i++)
+            {
+                xlSheet.Cells[3, 1 + i] = headers[i];
+            }
+            object[,] values = new object[szűrtdiák.Count, headers.Length-31];
+            int counter = 0;
+            foreach (Diák diak in szűrtdiák)
+            {
+                values[counter, 0] = diak.Név;
+                values[counter, 1] = diak.Ár;
+                values[counter, 2] = "";
+                counter++;
+            }
+
+            xlSheet.get_Range(
+            GetCell(4, 1),
+            GetCell(3 + values.GetLength(0), values.GetLength(1))).Value2 = values;
+
+            Excel.Range headerRange = xlSheet.get_Range(GetCell(3, 1), GetCell(3, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 30;
+            headerRange.Interior.Color = Color.Gray;
+            headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThin);
+
+            Excel.Range calculated = xlSheet.get_Range(GetCell(4, 3),
+            GetCell(3 + values.GetLength(0), 3));
+            calculated.Formula = "=B4 * counta(D4:AH4)";
+        }
+        private string GetCell(int x, int y)
+                    {
+                        string ExcelCoordinate = "";
+                        int dividend = y;
+                        int modulo;
+
+                        while (dividend > 0)
+                        {
+                            modulo = (dividend - 1) % 26;
+                            ExcelCoordinate = Convert.ToChar(65 + modulo).ToString() + ExcelCoordinate;
+                            dividend = (int)((dividend - modulo) / 26);
+                        }
+                        ExcelCoordinate += x.ToString();
+
+                        return ExcelCoordinate;
+                    }
         private void comboBox5_SelectionChangeCommitted(object sender, EventArgs e)
         {
             szűrés();
@@ -102,6 +193,7 @@ namespace eatSUMthing
             if (v.ShowDialog() == DialogResult.OK)
             {
                 MessageBox.Show("Sikeres ellenőrzés! \n A kért folyamat elkezdődött.");
+                CreateExcel();
             }
 
         }
