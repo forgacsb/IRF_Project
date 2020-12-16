@@ -15,3 +15,6 @@ A programban ügyfeleket tárolunk viszont nem minden ügyfélnek vannak azonos 
 Létrejövő, ebből származtatott két osztály pedig a Pedagógus és a Tanuló lesz.
 
 Mindemellett a program része egy PricingEngine árazómodul készítése, mely kiszámolja a többkülönféle bemeneti paraméter alapján a kiszámlázandó étkezési díjakat.
+
+A későbbiekben könnyebben továbbfejleszthetjük alkalmazásunkat. Abban az esetben, ha fellép egy új tipusú ügyfél kezelésének igénye elegendő egy új osztályt létrehozni, például: nyugdíjas osztályt. Ezt az osztály típusra tudjuk szabni ezáltal könnyítve a programozási feladatainkon. Ez egyfajta továbbfejlesztési lehetősége a programnak.
+Az adatbázist SQL Express segítségével valósítottam meg, így az adatbázis a Temp mappa helyett az SQL express program fileson belüli mappájába helyeztem el.
